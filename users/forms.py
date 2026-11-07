@@ -1,5 +1,12 @@
 from django import forms
-from .models import Product, Category, Customer, Inventory, Order, OrderDetail, StockBalance
+from django.contrib.auth.forms import UserCreationForm
+from .models import Product, Category, Customer, Inventory, Order, OrderDetail, StockBalance, User
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2')
 
 class CartForm(forms.Form):
     product = forms.ModelChoiceField(queryset=Product.objects.all())

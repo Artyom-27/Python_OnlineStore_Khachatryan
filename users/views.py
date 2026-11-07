@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Product, Category, Customer, Inventory, CartItem, Order, OrderDetail, StockBalance
-from .forms import CartForm
+from .forms import CartForm, CustomUserCreationForm
 from .models import Cart
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 # Create your views here.
@@ -107,15 +106,15 @@ def add_to_cart(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('home')
         else:
-            form = UserCreationForm()
+            form = CustomUserCreationForm()
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
 
