@@ -1,6 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div style="display: flex; gap: 10px; flex-direction: row">
+        <form action="{% url 'home' %}">
+            <button type="submit">Главная</button>
+        </form>
+        <form action="{% url 'product_list' %}">
+            <button type="submit">Товары</button>
+        </form>
+        <form action="{% url 'category_list' %}">
+            <button type="submit">Категории</button>
+        </form>
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">
+                    Выйти
+                </button>
+            </form>
+        {% else %}
+            <form action="{% url 'login' %}">
+                <button type="submit">Войти</button>
+            </form>
+            <form action="{% url 'register' %}">
+                <button type="submit">Регистрация</button>
+            </form>
+        {% endif %}
+</div>
 <h2>Home</h2>
-<p>Welcome to the online store!</p>
+{% if user.is_authenticated %}
+    <h2>Добро пожаловать, {{ user.username }}!</h2>
+{% else %}
+    <h2>Добро пожаловать!</h2>
+{% endif %}
 {% endblock %}
