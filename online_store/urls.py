@@ -16,7 +16,35 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from users.views import (
+    product_list, product_detail,
+    category_list, category_detail,
+    customer_list, customer_detail,
+    inventory_list, inventory_detail,
+    cartitem_list, cartitem_detail,
+    order_list, order_detail,
+    orderdetail_list, orderdetail_detail,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('products/', product_list, name='product_list'),
+    path('products/<int:pk>/', product_detail, name='product_detail'),
+    path('categories/', category_list, name='category_list'),
+    path('categories/<int:pk>/', category_detail, name='category_detail'),
+    path('customers/', customer_list, name='customer_list'),
+    path('customers/<int:pk>/', customer_detail, name='customer_detail'),
+    path('inventory/', inventory_list, name='inventory_list'),
+    path('inventory/<int:pk>/', inventory_detail, name='inventory_detail'),
+    path('cartitems/', cartitem_list, name='cartitem_list'),
+    path('cartitems/<int:pk>/', cartitem_detail, name='cartitem_detail'),
+    path('orders/', order_list, name='order_list'),
+    path('orders/<int:pk>/', order_detail, name='order_detail'),
+    path('orderdetails/', orderdetail_list, name='orderdetail_list'),
+    path('orderdetails/<int:pk>/', orderdetail_detail, name='orderdetail_detail'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,6 @@
+<h1>Inventory List</h1>
+<ul>
+    {% for inventory in inventories %}
+        <li><a href="{% url 'inventory_detail' inventory.id %}">{{ inventory.product.name }} - {{ inventory.quantity_in_stock }} шт.</a></li>
+    {% endfor %}
+</ul>

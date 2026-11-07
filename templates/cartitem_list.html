@@ -1,0 +1,6 @@
+<h1>Cart Items List</h1>
+<ul>
+    {% for cartitem in cartitems %}
+        <li><a href="{% url 'cartitem_detail' cartitem.id %}">{{ cartitem.product.name }} ({{ cartitem.quantity }} шт.) - {{ cartitem.user.username|default:"Гость" }}</a></li>
+    {% endfor %}
+</ul>

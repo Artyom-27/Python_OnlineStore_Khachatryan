@@ -1,0 +1,13 @@
+<h1>{{ customer.last_name }} {{ customer.first_name }}</h1>
+<p><strong>Отчество:</strong> {{ customer.middle_name|default:"-" }}</p>
+<p><strong>Телефон:</strong> {{ customer.phone }}</p>
+<p><strong>Email:</strong> {{ customer.email }}</p>
+<p><strong>Адрес:</strong></p>
+<ul>
+    <li>Страна: {{ customer.country }}</li>
+    <li>Город: {{ customer.city }}</li>
+    <li>Улица: {{ customer.street }}</li>
+    <li>Номер дома: {{ customer.house_number }}</li>
+    <li>Номер квартиры: {{ customer.apartment_number|default:"-" }}</li>
+    <li>Почтовый индекс: {{ customer.postal_code }}</li>
+</ul>

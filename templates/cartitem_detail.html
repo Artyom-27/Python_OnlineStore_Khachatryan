@@ -1,0 +1,5 @@
+<h1>Корзина - {{ cartitem.product.name }}</h1>
+<p><strong>Пользователь:</strong> {{ cartitem.user.username|default:"Гость" }}</p>
+<p><strong>Товар:</strong> {{ cartitem.product.name }}</p>
+<p><strong>Количество:</strong> {{ cartitem.quantity }}</p>
+<p><strong>Добавлено в корзину:</strong> {{ cartitem.added_at }}</p>

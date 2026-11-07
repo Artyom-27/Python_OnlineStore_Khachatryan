@@ -1,0 +1,6 @@
+<h1>Order Details List</h1>
+<ul>
+    {% for orderdetail in orderdetails %}
+        <li><a href="{% url 'orderdetail_detail' orderdetail.id %}">Заказ №{{ orderdetail.order.id }} - {{ orderdetail.product.name }} ({{ orderdetail.quantity }} шт.)</a></li>
+    {% endfor %}
+</ul>
