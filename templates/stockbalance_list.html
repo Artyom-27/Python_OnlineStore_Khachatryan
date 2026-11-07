@@ -1,0 +1,13 @@
+<h1>Stock Balance List</h1>
+<ul>
+    {% for stockbalance in stockbalances %}
+        <li>
+            <a href="{% url 'stockbalance_detail' stockbalance.id %}">
+                {{ stockbalance.product.name }} - {{ stockbalance.quantity }} шт.
+                {% if stockbalance.is_low_stock %}
+                    <span style="color: red;">(Низкий запас!)</span>
+                {% endif %}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,109 @@
+[
+  {
+    "model": "users.category",
+    "pk": 1,
+    "fields": {
+      "name": "Электроника"
+    }
+  },
+  {
+    "model": "users.category",
+    "pk": 2,
+    "fields": {
+      "name": "Одежда"
+    }
+  },
+  {
+    "model": "users.product",
+    "pk": 1,
+    "fields": {
+      "name": "Ноутбук",
+      "description": "Мощный ноутбук для работы",
+      "price": "50000.00",
+      "category": 1
+    }
+  },
+  {
+    "model": "users.product",
+    "pk": 2,
+    "fields": {
+      "name": "Смартфон",
+      "description": "Современный смартфон",
+      "price": "30000.00",
+      "category": 1
+    }
+  },
+  {
+    "model": "users.product",
+    "pk": 3,
+    "fields": {
+      "name": "Футболка",
+      "description": "Хлопковая футболка",
+      "price": "1500.00",
+      "category": 2
+    }
+  },
+  {
+    "model": "users.inventory",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "quantity_in_stock": 10,
+      "warehouse_section": "A1",
+      "last_updated": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.inventory",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "quantity_in_stock": 20,
+      "warehouse_section": "A2",
+      "last_updated": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.inventory",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "quantity_in_stock": 50,
+      "warehouse_section": "B1",
+      "last_updated": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.stockbalance",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "quantity": 10,
+      "reserved_quantity": 0,
+      "minimum_stock": 5,
+      "last_updated": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.stockbalance",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "quantity": 20,
+      "reserved_quantity": 0,
+      "minimum_stock": 10,
+      "last_updated": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.stockbalance",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "quantity": 50,
+      "reserved_quantity": 0,
+      "minimum_stock": 15,
+      "last_updated": "2024-01-01T00:00:00Z"
+    }
+  }
+]

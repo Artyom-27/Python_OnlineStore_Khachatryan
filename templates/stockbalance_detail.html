@@ -1,0 +1,10 @@
+<h1>Баланс для {{ stockbalance.product.name }}</h1>
+<p><strong>Текущее количество:</strong> {{ stockbalance.quantity }} шт.</p>
+<p><strong>Зарезервировано:</strong> {{ stockbalance.reserved_quantity }} шт.</p>
+<p><strong>Доступно:</strong> {{ stockbalance.available_quantity }} шт.</p>
+<p><strong>Минимальный запас:</strong> {{ stockbalance.minimum_stock }} шт.</p>
+<p><strong>Дата последнего пополнения:</strong> {{ stockbalance.last_restocked|default:"-" }}</p>
+<p><strong>Дата последнего обновления:</strong> {{ stockbalance.last_updated }}</p>
+{% if stockbalance.is_low_stock %}
+    <p style="color: red; font-weight: bold;">⚠️ Низкий запас! Необходимо пополнить.</p>
+{% endif %}

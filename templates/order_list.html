@@ -1,0 +1,6 @@
+<h1>Order List</h1>
+<ul>
+    {% for order in orders %}
+        <li><a href="{% url 'order_detail' order.id %}">Заказ №{{ order.id }} от {{ order.order_date|date:"d.m.Y" }} - {{ order.get_order_status_display }}</a></li>
+    {% endfor %}
+</ul>

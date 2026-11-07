@@ -1,0 +1,4 @@
+<h1>Запас для {{ inventory.product.name }}</h1>
+<p><strong>Количество на складе:</strong> {{ inventory.quantity_in_stock }} шт.</p>
+<p><strong>Секция склада:</strong> {{ inventory.warehouse_section|default:"-" }}</p>
+<p><strong>Дата последнего обновления:</strong> {{ inventory.last_updated }}</p>
