@@ -65,6 +65,43 @@ class CartItem(models.Model):
         return f"Корзина {self.user.username if self.user else 'Гость'} - {self.product.name} ({self.quantity} шт.)"
 
 
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+
+    def __str__(self):
+        return f"Корзина пользователя {self.user.username}"
+
+    def add_item(self, product, quantity=1):
+        cart_item, created = CartItem.objects.get_or_create(
+            user=self.user,
+            product=product,
+            defaults={'quantity': quantity}
+        )
+        if not created:
+            cart_item.quantity += quantity
+            cart_item.save()
+        return cart_item
+
+    def remove_item(self, product):
+        CartItem.objects.filter(user=self.user, product=product).delete()
+
+    def clear(self):
+        CartItem.objects.filter(user=self.user).delete()
+
+    @property
+    def total_price(self):
+        total = 0
+        for item in CartItem.objects.filter(user=self.user):
+            total += item.product.price * item.quantity
+        return total
+
+    @property
+    def total_items(self):
+        return CartItem.objects.filter(user=self.user).count()
+
+
 class Order(models.Model):
     STATUS_CHOICES = [
         ('new', 'Новый'),
@@ -91,3 +128,22 @@ class OrderDetail(models.Model):
 
     def __str__(self):
         return f"Позиция заказа №{self.order.id}: {self.product.name}"
+
+
+class StockBalance(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, verbose_name="Товар")
+    quantity = models.IntegerField(default=0, verbose_name="Текущее количество")
+    reserved_quantity = models.IntegerField(default=0, verbose_name="Зарезервировано")
+    minimum_stock = models.IntegerField(default=10, verbose_name="Минимальный запас")
+    last_restocked = models.DateTimeField(blank=True, null=True, verbose_name="Дата последнего пополнения")
+    last_updated = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
+
+    def __str__(self):
+        return f"Баланс {self.product.name}: {self.quantity} шт. (зарезервировано: {self.reserved_quantity})"
+
+    @property
+    def available_quantity(self):
+        return self.quantity - self.reserved_quantity
+
+    def is_low_stock(self):
+        return self.available_quantity < self.minimum_stock

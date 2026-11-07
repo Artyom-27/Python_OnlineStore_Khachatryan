@@ -1,5 +1,9 @@
-from django.shortcuts import render
-from .models import Product, Category, Customer, Inventory, CartItem, Order, OrderDetail
+from django.shortcuts import render, redirect
+from .models import Product, Category, Customer, Inventory, CartItem, Order, OrderDetail, StockBalance
+from .forms import CartForm
+from .models import Cart
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 
@@ -86,3 +90,42 @@ def orderdetail_detail(request, pk):
     context = {'orderdetail': orderdetail}
     return render(request, 'orderdetail_detail.html', context)
 
+
+def add_to_cart(request):
+    if request.method == "POST":
+     form = CartForm(request.POST)
+    if form.is_valid():
+            product = form.clean_data['product']
+            quantity = form.clean_data['quantity']
+            cart, created = Cart.objects.get_or_create(user=request.user)
+            cart.add_item(product, quantity)
+            return redirect('cart')
+    else:
+        form = CartForm()
+    return render(request, 'add_to_cart.html', {'form': form})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            form = UserCreationForm()
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+def stockbalance_list(request):
+    stockbalances = StockBalance.objects.all()
+    context = {'stockbalances': stockbalances}
+    return render(request, 'stockbalance_list.html', context)
+
+
+def stockbalance_detail(request, pk):
+    stockbalance = StockBalance.objects.get(pk=pk)
+    context = {'stockbalance': stockbalance}
+    return render(request, 'stockbalance_detail.html', context)
